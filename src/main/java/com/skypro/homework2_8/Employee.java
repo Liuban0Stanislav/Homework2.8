@@ -16,7 +16,7 @@ public class Employee {
         this.id = idCounter++;
     }
 
-    public String getFirstName() {
+    public String getFullName() {
         return fullName;
     }
 
@@ -32,7 +32,11 @@ public class Employee {
         return salary;
     }
 
-    public void setFirstName(String firstName) {
+    public static int getIdCounter() {
+        return idCounter;
+    }
+
+    public void setFullName(String firstName) {
         this.fullName = firstName;
     }
 
@@ -62,11 +66,9 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "fullName='" + fullName + '\'' +
-                ", salary=" + salary +
-                ", dept=" + dept +
-                ", id=" + id +
-                '}';
+        return                  fullName +
+                " зарплата: " + salary +
+                ", отдел: " + dept +
+                ", id: " + id ;
     }
 }

@@ -1,0 +1,6 @@
+http://localhost:8080/find?fullName=Попова%20Варвара%20Богдановна
+http://localhost:8080/remove?fullName=Попова%20Варвара%20Богдановна
+http://localhost:8080/change?fullNameDeletingEmployee=Попова%20Варвара%20Богдановна&fullNameNewEmployee=Андреев%20Максим%20Викторович&newSalary=63250&newDept=1
+http://localhost:8080/salaryIndexing?percent=3.5
+http://localhost:8080/salaryLess?lessThan=80000
+http://localhost:8080/salaryMore?moreThan=80000
