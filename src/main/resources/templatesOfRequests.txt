@@ -4,3 +4,7 @@ http://localhost:8080/change?fullNameDeletingEmployee=Попова%20Варва�
 http://localhost:8080/salaryIndexing?percent=3.5
 http://localhost:8080/salaryLess?lessThan=80000
 http://localhost:8080/salaryMore?moreThan=80000
+http://localhost:8080/findEmployeesMinMaxSalary
+http://localhost:8080/findAndPrintEmployeeById?id=2
+http://localhost:8080/monthMiddleSalary
+http://localhost:8080/middleSalaryByDept?dept=2

@@ -21,7 +21,15 @@ public class EmployeeBook {
             "Кузнецов Александр Семенович",
             new Employee("Кузнцов Александр Семенович", 67_000, 4),
             "Скворцов Сергей Денисович",
-            new Employee("Скворцов Сергей Денисович", 63_000, 4)
+            new Employee("Скворцов Сергей Денисович", 63_000, 4),
+            "Александров Михаил Богданович",
+            new Employee("Александров Михаил Богданович", 99_000, 2),
+            "Карчемный Владимир Георгиевич",
+            new Employee("Карчемный Владимир Георгиевич", 72_000, 1),
+            "Юницин Сергей Михайлович",
+            new Employee("Юницин Сергей Михайлович", 76_000, 5),
+            "Рыбкин Данил Амвросиевич",
+            new Employee("Рыбкин Данил Амвросиевич", 75_000, 3)
     ));
 
 
@@ -215,75 +223,69 @@ public class EmployeeBook {
 
 
 
-//    public int findEmployeesIdMinimalSalary() throws Exception {
-//        if (employees == null) {
-//            throw new Exception ("В базе отсутствуют сотрудники");
-//        }
-//        int min = employees[0].getSalary();
-//        int idEmployee = 0;
-//        for (int i = 0; i < idCounter; i++) {
-//            if (employees[i].getSalary() <= min) {
-//                min = employees[i].getSalary();
-//                idEmployee = employees[i].getId();
-//            }
-//        }
-//        return idEmployee;
-//    }
-//
-//    public int findEmployeesIdMaximalSalary() {
-//        int max = employees[0].getSalary();
-//        int idEmployee = 0;
-//        for (int i = 0; i < employees.length; i++) {
-//            if (employees[i].getSalary() > max) {
-//                max = employees[i].getSalary();
-//                idEmployee = employees[i].getId();
-//            }
-//        }
-//        return idEmployee;
-//    }
-//
-//    public void findAndPrintEmployeeById(int id) {
-//        for (int i = 0; i < employees.length; i++) {
-//            if (id == employees[i].getId()) {
-//                printEmployeeInfo(employees[i]);
-//            }
-//        }
-//    }
-//
-//    public int monthSumSalary() {
-//        int sum = 0;
-//        for (int i = 0; i < employees.length; i++) {
-//            sum = employees[i].getSalary() + sum;
-//        }
-//        return sum;
-//    }
-//
-//    public double monthMiddleSalary(int sum) {
-//        return (double) sum / employees.length;
-//    }
-//
-//    public double middleSalaryById(int idOfEmployee) {
-//        int sumSalaries = 0;
-//        int deptsCounter = 0;
-//        for (int i = 0; i < employees.length; i++) {
-//            if (employees[i].getDept() == idOfEmployee) {
-//                sumSalaries = employees[i].getSalary() + sumSalaries;
-//                deptsCounter++;
-//            }
+    public String findEmployeesMinimalSalary() {
+        int min = Integer.MAX_VALUE;
+        String fullName = "";
+        for (Employee employee: employees.values()) {
+            if (employee.getSalary() <= min) {
+                min = employee.getSalary();
+                fullName = employee.getFullName();
+            }
+        }
+        return fullName;
+    }
+
+    public String findEmployeesMaximalSalary() {
+        int max = Integer.MIN_VALUE;
+        String fullName = "";
+        for (Employee employee: employees.values()) {
+            if (employee.getSalary() > max) {
+                max = employee.getSalary();
+                fullName = employee.getFullName();
+            }
+        }
+        return fullName;
+    }
+
+    public String findAndPrintEmployeeById(int id) {
+        String mapKey = "";
+        for (Employee employee: employees.values()) {
+            if (id == employee.getId()) {
+                mapKey = employee.getFullName();
+            }
+        }
+        return mapKey;
+    }
+
+    public int monthSumSalary() {
+        int sum = 0;
+        for (Employee employee: employees.values()) {
+            sum = employee.getSalary() + sum;
+        }
+        return sum;
+    }
+
+    public String monthMiddleSalary(int sum) {
+        return new DecimalFormat("###,###.##").format(  (double) sum / employees.size());
+    }
+
+    public String middleSalaryByDept(int deptOfEmployee) {
+        if (deptOfEmployee >= 6 && deptOfEmployee < 1){
+            throw new RuntimeException();
+        }
+        int sumSalaries = 0;
+        int deptsCounter = 0;
+        for (Employee employee: employees.values()) {
+            if (employee.getDept() == deptOfEmployee) {
+                sumSalaries = employee.getSalary() + sumSalaries;
+                deptsCounter++;
+            }
 //            if (sumSalaries == 0) {
-//                return -1;
+//                return "0";
 //            }
-//        }
-//        return (double) sumSalaries / deptsCounter;
-//    }
-//
-//    public static int getIdCounter() {
-//        return idCounter;
-//    }
-//
-//    public static void setIdCounter(int idCounter) {
-//        EmployeeBook.idCounter = idCounter;
-//    }
-//
+        }
+        return Double.toString(sumSalaries / deptsCounter);
+    }
+
 
 }

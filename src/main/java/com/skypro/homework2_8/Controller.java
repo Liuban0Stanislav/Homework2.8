@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DecimalFormat;
+
 @RestController
 public class Controller {
 
@@ -72,12 +74,14 @@ public class Controller {
 
     @GetMapping("/printAllEmployeesWithoutDept")
     public String printAllEmployeesWithoutDept() {
-        return "<pre><h2><b>Список всех сотрудников без отделов:</b></h2>\n" + "" + employeeBook.printEmployeesWithoutDept() + "<pre>";
+        return "<pre><h2><b>Список всех сотрудников без отделов:</b></h2>\n" +
+                "" + employeeBook.printEmployeesWithoutDept() + "<pre>";
     }
 
     @GetMapping("/printEmployeesAccordingToDept")
     public String printEmployeesAccordingToDept() {
-        return "<pre><h2><b>Список всех сотрудников по отделам:</b></h2>\n" + "" + employeeBook.printEmployeesAccordingToDept() + "<pre>";
+        return "<pre><h2><b>Список всех сотрудников по отделам:</b></h2>\n" +
+                "" + employeeBook.printEmployeesAccordingToDept() + "<pre>";
     }
 
     @GetMapping("/salaryIndexing")
@@ -96,10 +100,59 @@ public class Controller {
                 "<pre>" + employeeBook.salaryLessThan(salaryLessThan) + "<pre>";
 
     }
+
     @GetMapping("/salaryMore")
     public String salaryMoreThan(@RequestParam("moreThan") int salaryMoreThan) {
-        return "<pre><h2><b>Сотрудник с зарплатой больше чем - " + salaryMoreThan + " рублей</b></h2><pre>" +
-                "<pre>" + employeeBook.salaryMoreThan(salaryMoreThan) + "<pre>";
+        return "<pre><h2><b>Сотрудник с зарплатой меньше чем - " + salaryMoreThan + " рублей</b></h2><pre>" +
+                "<pre>" + employeeBook.salaryLessThan(salaryMoreThan) + "<pre>";
 
     }
+
+    @GetMapping("/findEmployeesMinMaxSalary")
+    public String findEmployeesMinMaxSalary() {
+        return "<pre><h2><b>Сотрудник с минимальной зарплатой - " +
+                employeeBook.findEmployeesMinimalSalary() + " " +
+                employeeBook.getEmployees().get(employeeBook.findEmployeesMinimalSalary()).getSalary() +
+                " р. </b></h2><pre>" + "<pre><h2><b>Сотрудник с максимальной зарплатой больше чем - " +
+                employeeBook.findEmployeesMaximalSalary() + " " +
+                employeeBook.getEmployees().get(employeeBook.findEmployeesMaximalSalary()).getSalary() +
+                " р.</b></h2><pre>";
+
+    }
+
+    @GetMapping("/findAndPrintEmployeeById")
+    public String findAndPrintEmployeeById(@RequestParam("id") int id) {
+        int idRez;
+        try {
+            idRez = Integer.valueOf(employeeBook.getEmployees().get(employeeBook.findAndPrintEmployeeById(id)).getId());
+        } catch (NullPointerException e) {
+            throw new RuntimeException("\u001B[31m Сотрудника с таким ID не существует \u001B[0m");
+        }
+        return "<pre><h2><b>Сотрудник чей id=" + idRez +
+                " - " + employeeBook.findAndPrintEmployeeById(id) + "</b></h2><pre>";
+
+    }
+
+    @GetMapping("/monthMiddleSalary")
+    public String monthMiddleSalary() {
+        return "<pre><h2><b>Среднемесячная зарплата - " +
+               employeeBook.monthMiddleSalary(employeeBook.monthSumSalary()) +
+                " рублей</b></h2><pre>";
+
+    }
+
+    @GetMapping("/middleSalaryByDept")
+    public String middleSalaryByDept(@RequestParam("dept") int dept) {
+        String stringRez;
+        try {
+            stringRez = employeeBook.middleSalaryByDept(dept);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("\u001B[31m Номера департаментов 1 - 5, введите корректный номер \u001B[0m");
+        }
+        return "<pre><h2><b>Средняя зарплата по отделу - " +
+                stringRez +
+                " рублей</b></h2><pre>";
+
+    }
+
 }
